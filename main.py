@@ -87,11 +87,12 @@ class Window(QWidget):
         self.text.setFont(self.newfont)
 
         self.rut_editor = TextEdit(self)
-        self.rut_editor.setGeometry(SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/4 + 150, 200, 60)
+        self.rut_editor.setGeometry(SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/4 + 150, 250, 60)
 
         self.enter_button = QPushButton('Ingresar', self)
-        self.enter_button.setGeometry(SCREEN_WIDTH/2 + 300, SCREEN_HEIGHT/4 + 150, 100, 60)
+        self.enter_button.setGeometry(SCREEN_WIDTH/2 + 300, SCREEN_HEIGHT/4 + 150, 120, 60)
         self.enter_button.clicked.connect(self.EnterRut)
+        self.enter_button.setFont(QFont("Times", 17))
 
         self.error_label = QLabel('RUT inválido', self)
         self.error_label.setGeometry(SCREEN_WIDTH/2+250, SCREEN_HEIGHT/4 + 220, 200, 60)
@@ -99,7 +100,7 @@ class Window(QWidget):
         self.error_label.setStyleSheet('color:red')
 
         self.keyboard = Keyboard(self, self.rut_editor)
-        self.keyboard.setGeometry(SCREEN_WIDTH/2 -75, SCREEN_HEIGHT/4 + 250, 210, 280)
+        self.keyboard.setGeometry(SCREEN_WIDTH/2 -275, SCREEN_HEIGHT/4 + 250, 480, 300)
 
 
         self.box_text = QLabel(self)
@@ -135,6 +136,7 @@ class Window(QWidget):
         self.box_button.hide()
         self.cancel_button.hide()
         self.keyboard.hide()
+        self.error_label.hide()
 
 
     def charge(self):

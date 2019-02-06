@@ -17,12 +17,14 @@ class TextEdit(QLineEdit):
         self.setText('ej: 12345678-9')
         self.numbers = ''
         self.digit = ''
+        self.setFont(QFont("Times", 19))
 
 
     def mousePressEvent(self, event):
         super().mousePressEvent(event)
         self.parent().keyboard.show()
         self.parent().error_label.hide()
+        self.parent().start = time.time()
         if self.text() =='ej: 12345678-9':
              self.setText('')
 
@@ -79,7 +81,7 @@ class Button(QPushButton):
             self.setIconSize(QSize(30,30))
         else:
             self.setText(key)
-            self.setFont(QFont("Times", 15))
+            self.setFont(QFont("Times", 25))
 
 
 
@@ -93,13 +95,13 @@ class Keyboard(QWidget):
         for i in range(10):
             button = Button(self, str((i+1)%10))
             self.buttons.append(button)
-            button.setGeometry(((i)%3* 70) + i//9 * 70, i//3 *70, 70, 70)
+            button.setGeometry(((i)%3* 120) + i//9 * 120, i//3 *100, 120, 100)
             button.show()
         button = Button(self, 'K')
         self.buttons.append(button)
-        button.setGeometry(0,210, 70, 70)
+        button.setGeometry(0,360, 120, 100)
         button.show()
         button = Button(self,'DEL','assets/delete')
         self.buttons.append(button)
-        button.setGeometry(140, 210, 70, 70)
+        button.setGeometry(200, 360, 120, 100)
         button.show()

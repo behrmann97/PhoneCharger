@@ -79,6 +79,7 @@ class Button(QPushButton):
             self.setIconSize(QSize(30,30))
         else:
             self.setText(key)
+            self.setFont(QFont("Times", 15))
 
 
 

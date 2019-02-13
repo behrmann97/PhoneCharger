@@ -36,8 +36,8 @@ class Window(QWidget):
         self.errorfont = QFont("Times", 10)
 
         self.icon = QLabel(self)
-        self.icon.setGeometry(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT/4 - 48, 400, 96)
-        self.icon.setPixmap(QPixmap('assets/logo').scaled(400,96))
+        self.icon.setGeometry(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT/4 - 250, 400, 400)
+        self.icon.setPixmap(QPixmap('assets/logo-blanco').scaled(400,400))
 
     def check_time(self):
         newtime = time.time()

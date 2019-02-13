@@ -9,6 +9,7 @@ from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from clases import TextEdit, Keyboard
 import json
 import time
+import serial
 
 SCREEN_WIDTH *= 1.25
 SCREEN_HEIGHT *=1.25
@@ -18,6 +19,7 @@ class Window(QWidget):
 
     def __init__(self, parent = None):
         super().__init__(parent)
+        self.ser = serial.Serial('COM3')
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.show()
         self.start = time.time()
@@ -109,7 +111,7 @@ class Window(QWidget):
         self.error_label.setStyleSheet('color:red')
 
         self.keyboard = Keyboard(self, self.rut_editor)
-        self.keyboard.setGeometry(SCREEN_WIDTH/2 -275, SCREEN_HEIGHT/4 + 250, 480, 300)
+        self.keyboard.setGeometry(SCREEN_WIDTH/2 -275, SCREEN_HEIGHT/4 + 250, 360, 400)
 
 
         self.box_text = QLabel(self)
@@ -214,6 +216,7 @@ momento no hay casillas disponibles''')
                 if box != 'MAX':
                     self.box_text.setText('''Por favor, deja tu celular
     en la casilla número {}'''.format(box))
+                    self.arduino_write(int(box))
 
                     self.box_button.show()
                 else:
@@ -224,8 +227,6 @@ momento no hay casillas disponibles''')
 
         else:
             self.error_label.show()
-
-
 
 
     def getBox(self):
@@ -254,6 +255,14 @@ momento no hay casillas disponibles''')
                     json.dump(self.boxes, file)
                 return i
         return False
+
+    def arduino_write(self, b_numer):
+        try:
+            self.ser.write(b_numer)
+            return True
+        except:
+            return False
+
 
 
 

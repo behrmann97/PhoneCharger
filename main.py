@@ -19,7 +19,7 @@ class Window(QWidget):
 
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.ser = serial.Serial('COM3')
+        # self.ser = serial.Serial('COM3')
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.show()
         self.start = time.time()

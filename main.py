@@ -10,6 +10,10 @@ from clases import TextEdit, Keyboard
 import json
 import time
 
+SCREEN_WIDTH *= 1.25
+SCREEN_HEIGHT *=1.25
+
+
 class Window(QWidget):
 
     def __init__(self, parent = None):
@@ -25,7 +29,7 @@ class Window(QWidget):
 
         self.background = QLabel(self)
         self.background.setGeometry(0,0, SCREEN_WIDTH,SCREEN_HEIGHT)
-        self.background.setStyleSheet("background-color: rgba(0,0,255,50%)")
+        self.background.setStyleSheet("background-color: #3d5367")
 
         self.newfont = QFont("Times", 30)
         self.smallfont = QFont("Times", 15)
@@ -55,9 +59,9 @@ class Window(QWidget):
             self.text.hide()
         self.timer.stop()
         self.small = True
-        self.setGeometry(SCREEN_WIDTH-100, SCREEN_HEIGHT -100, 95, 95)
+        self.setGeometry(SCREEN_WIDTH-200, SCREEN_HEIGHT -200, 195, 195)
         self.small_icon = QLabel(self)
-        self.small_icon.setPixmap(QPixmap('assets/logo_small').scaled(95,95))
+        self.small_icon.setPixmap(QPixmap('assets/Loguito').scaled(195,195))
         self.small_icon.show()
 
     def bigScreen(self):
@@ -72,17 +76,22 @@ class Window(QWidget):
         self.background.show()
         self.icon.show()
 
-        self.charge_button = QPushButton('Cargar celular', self)
-        self.charge_button.setGeometry(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT/4 + 150, 200, 70)
+        self.charge_button = QPushButton('', self)
+        self.charge_button.setIcon(QIcon('assets/Cargar'))
+        self.charge_button.setIconSize(QSize(400,400))
+        self.charge_button.setGeometry(SCREEN_WIDTH/2 - 500, SCREEN_HEIGHT/4 + 150, 400, 400)
         self.charge_button.clicked.connect(self.charge)
         self.charge_button.setFont(self.smallfont)
 
-        self.take_button = QPushButton('Retirar celular', self)
-        self.take_button.setGeometry(SCREEN_WIDTH/2 + 20, SCREEN_HEIGHT/4 + 150, 200, 70)
+        self.take_button = QPushButton('', self)
+        self.take_button.setIcon(QIcon('assets/Retirar'))
+        self.take_button.setIconSize(QSize(400,400))
+        self.take_button.setGeometry(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT/4 + 150, 400, 400)
         self.take_button.clicked.connect(self.take)
         self.take_button.setFont(self.smallfont)
 
         self.text = QLabel('Ingresa tu RUT :', self)
+        self.text.setStyleSheet("color: white")
         self.text.setGeometry(SCREEN_WIDTH/2 - 400, SCREEN_HEIGHT/4 + 150, 400, 60)
         self.text.setFont(self.newfont)
 

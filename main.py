@@ -14,6 +14,9 @@ import serial
 SCREEN_WIDTH *= 1.25
 SCREEN_HEIGHT *=1.25
 
+with open('defaults.json') as file:
+    defaults = json.load(file)
+
 
 class Window(QWidget):
 
@@ -31,7 +34,7 @@ class Window(QWidget):
 
         self.background = QLabel(self)
         self.background.setGeometry(0,0, SCREEN_WIDTH,SCREEN_HEIGHT)
-        self.background.setStyleSheet("background-color: #3d5367")
+        self.background.setStyleSheet("background-color: rgb({},{},{})".format(*defaults['color']))
 
         self.newfont = QFont("Times", 30)
         self.smallfont = QFont("Times", 15)
@@ -39,11 +42,11 @@ class Window(QWidget):
 
         self.icon = QLabel(self)
         self.icon.setGeometry(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT/4 - 250, 400, 400)
-        self.icon.setPixmap(QPixmap('assets/logo-blanco').scaled(400,400))
+        self.icon.setPixmap(QPixmap('assets/Logo').scaled(400,400))
 
     def check_time(self):
         newtime = time.time()
-        if not self.small and newtime - self.start >= 5:
+        if not self.small and newtime - self.start >= defaults['time']:
             self.smallScreen()
 
 
@@ -61,9 +64,9 @@ class Window(QWidget):
             self.text.hide()
         self.timer.stop()
         self.small = True
-        self.setGeometry(SCREEN_WIDTH-200, SCREEN_HEIGHT -200, 195, 195)
+        self.setGeometry(SCREEN_WIDTH-defaults['size'] - 5, SCREEN_HEIGHT -defaults['size'] - 5, defaults['size'], defaults['size'])
         self.small_icon = QLabel(self)
-        self.small_icon.setPixmap(QPixmap('assets/Loguito').scaled(195,195))
+        self.small_icon.setPixmap(QPixmap(defaults['image']).scaled(defaults['size'],defaults['size']))
         self.small_icon.show()
 
     def bigScreen(self):
@@ -72,7 +75,7 @@ class Window(QWidget):
         self.small = False
         self.setGeometry(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)
         self.timer.start(500)
-        with open('data.txt') as json_file:
+        with open('data.json') as json_file:
             self.boxes = json.load(json_file)
         self.show()
         self.background.show()
@@ -242,7 +245,7 @@ momento no hay casillas disponibles''')
     def closeBox(self):
         self.start = time.time()
         self.boxes[self.getBox()] = self.rut
-        with open('data.txt', 'w') as file:
+        with open('data.json', 'w') as file:
             json.dump(self.boxes, file)
         self.setUp()
 
@@ -251,7 +254,7 @@ momento no hay casillas disponibles''')
         for i in self.boxes:
             if self.boxes[i] == self.rut:
                 self.boxes[i] = False
-                with open('data.txt', 'w') as file:
+                with open('data.json', 'w') as file:
                     json.dump(self.boxes, file)
                 return i
         return False
